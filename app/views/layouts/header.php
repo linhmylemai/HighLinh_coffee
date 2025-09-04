@@ -1,3 +1,9 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+// Chỉnh BASE_URL đúng gốc project của bạn
+if (!defined('BASE_URL')) define('BASE_URL', '/CAFE/HighLinh_coffee/');
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -6,16 +12,17 @@
   <title>HighLinh Coffee</title>
 
   <!-- Google Fonts + Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <!-- CSS chính -->
+  <!-- CSS -->
   <link rel="stylesheet" href="<?= BASE_URL ?>public/assets/css/style.css">
   <!-- JS -->
   <script defer src="<?= BASE_URL ?>public/assets/js/main.js"></script>
 </head>
 <body>
 <header class="hl-header">
+  <!-- Top bar -->
   <div class="hl-topbar">
     <div class="container">
       <span><i class="fa-solid fa-mug-hot"></i> HighLinh Coffee – Since 2025</span>
@@ -27,47 +34,41 @@
     </div>
   </div>
 
-  <nav class="hl-navbar">
+  <!-- Navbar -->
+  <nav class="hl-navbar" role="navigation" aria-label="Main navigation">
     <div class="container nav-inner">
-      <a class="brand" href="<?= BASE_URL ?>index.php?url=Home/index">
-        <img src="<?= BASE_URL ?>public/assets/images/logo.png" alt="HighLinh Coffee">
+      <!-- Logo -->
+      <a class="brand" href="<?= BASE_URL ?>index.php?url=Home/index" aria-label="Trang chủ HighLinh Coffee">
+        <img src="<?= BASE_URL ?>public/assets/images/logo.png" alt="HighLinh Coffee" style="height:50px; vertical-align:middle;" />
         <span>HighLinh Coffee</span>
       </a>
 
+      <!-- Toggle (mobile) -->
       <button class="nav-toggle" aria-label="Mở menu"><i class="fa-solid fa-bars"></i></button>
 
-      <ul class="nav-menu">
-        <li><a href="<?= BASE_URL ?>index.php?url=Home/index">Trang chủ</a></li>
-        <li><a href="<?= BASE_URL ?>index.php?url=Product/list">Sản phẩm</a></li>
-        <li><a href="<?= BASE_URL ?>index.php?url=Cart/index">Giỏ hàng</a></li>
-        <li><a href="<?= BASE_URL ?>index.php?url=User/login">Đăng nhập</a></li>
+      <!-- Menu trái: KHÔNG để nút Đăng nhập ở đây -->
+      <ul class="nav-menu" role="menubar">
+        <li role="none"><a href="<?= BASE_URL ?>index.php?url=Home/index" role="menuitem">Trang chủ</a></li>
+        <li role="none"><a href="<?= BASE_URL ?>index.php?url=Product/list" role="menuitem">Sản phẩm</a></li>
+        <?php if (!empty($_SESSION['user'])): ?>
+          <li role="none"><a href="<?= BASE_URL ?>index.php?url=Cart/index" role="menuitem">Giỏ hàng</a></li>
+        <?php endif; ?>
       </ul>
 
-      <a class="btn-primary nav-cta" href="<?= BASE_URL ?>index.php?url=Cart/index">
-        <i class="fa-solid fa-bag-shopping"></i> Đặt ngay
-      </a>
+      <!-- Nút góc phải: chỉ 1 nút duy nhất -->
+      <div class="login-right">
+        <?php if (!empty($_SESSION['user'])): ?>
+          <a class="login-link" href="<?= BASE_URL ?>index.php?url=User/logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+          </a>
+        <?php else: ?>
+          <a class="login-link" href="<?= BASE_URL ?>index.php?url=User/login">
+            <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập
+          </a>
+        <?php endif; ?>
+      </div>
     </div>
   </nav>
 </header>
-<header class="site-header">
-  <div class="container nav-bar">
-    <!-- Logo -->
-    <a href="<?= BASE_URL ?>" class="logo">
-      <img src="<?= BASE_URL ?>public/assets/images/logo.png" alt="HighLinh Coffee">
-    </a>
 
-    <!-- Menu -->
-    <nav class="main-nav">
-      <ul>
-        <li><a href="<?= BASE_URL ?>">Trang chủ</a></li>
-        <li><a href="<?= BASE_URL ?>index.php?url=Product/list">Menu</a></li>
-        <li><a href="<?= BASE_URL ?>index.php?url=About/index">Giới thiệu</a></li>
-        <li><a href="<?= BASE_URL ?>index.php?url=Contact/index">Liên hệ</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-
-<main>
-
+<main id="content" role="main">

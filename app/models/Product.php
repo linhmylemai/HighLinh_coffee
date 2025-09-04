@@ -1,15 +1,22 @@
 <?php
-require_once __DIR__ . '/Database.php';  // thêm dòng này
+require_once __DIR__ . '/../core/Database.php';
 
-class Product extends Database {
-    public function __construct() {
-        parent::__construct();  // gọi constructor Database
+class Product {
+    private $db;
+
+    public function __construct($db) {
+        $this->db = $db;
     }
 
     public function getAllProducts() {
-        $sql = "SELECT * FROM products";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $sql = "SELECT * FROM Products";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Nếu query lỗi thì throw ra cho controller xử lý
+            throw new Exception("Lỗi truy vấn Product: " . $e->getMessage());
+        }
     }
 }

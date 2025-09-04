@@ -17,4 +17,9 @@ class Database {
             die("Lỗi kết nối DB: " . $e->getMessage());
         }
     }
+
+    // Phương thức để lấy kết nối PDO
+    public function getConnection() {
+        return $this->conn;
+    }
 }

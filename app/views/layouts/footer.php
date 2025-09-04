@@ -4,21 +4,21 @@
   <div class="container footer-grid">
     <div>
       <h4>Về HighLinh</h4>
-      <p>Đậm vị Việt, chuẩn gu cà phê. Chúng tôi mang đến trải nghiệm cà phê chân thật trong không gian hiện đại.</p>
+      <p>Đậm vị Việt, chuẩn gu cà phê. Trải nghiệm cà phê chân thật trong không gian hiện đại.</p>
     </div>
     <div>
       <h4>Liên kết</h4>
       <ul>
-        <li><a href="<?= BASE_URL ?>index.php?url=Home/index">Trang chủ</a></li>
-        <li><a href="<?= BASE_URL ?>index.php?url=Product/list">Menu</a></li>
-        <li><a href="<?= BASE_URL ?>index.php?url=User/login">Thành viên</a></li>
-        <li><a href="<?= BASE_URL ?>index.php?url=Cart/index">Giỏ hàng</a></li>
+        <li><a href="<?= htmlspecialchars(BASE_URL) ?>index.php?url=Home/index">Trang chủ</a></li>
+        <li><a href="<?= htmlspecialchars(BASE_URL) ?>index.php?url=Product/list">Menu</a></li>
+        <li><a href="<?= htmlspecialchars(BASE_URL) ?>index.php?url=User/login">Thành viên</a></li>
+        <li><a href="<?= htmlspecialchars(BASE_URL) ?>index.php?url=Cart/index">Giỏ hàng</a></li>
       </ul>
     </div>
     <div>
       <h4>Nhận ưu đãi</h4>
-      <form class="newsletter" onsubmit="event.preventDefault(); hlToast('Đã đăng ký nhận ưu đãi!')">
-        <input type="email" placeholder="Email của bạn" required>
+      <form class="newsletter" onsubmit="hlSubscribeNewsletter(event)">
+        <input type="email" name="email" placeholder="Email của bạn" required>
         <button class="btn-primary" type="submit">Đăng ký</button>
       </form>
       <div class="socials">
@@ -33,5 +33,16 @@
     © <?= date('Y') ?> HighLinh Coffee — Enjoy Your Coffee
   </div>
 </footer>
+
+<script>
+function hlSubscribeNewsletter(e){
+  e.preventDefault();
+  const email = e.target.querySelector('input[name="email"]').value;
+  if (email) { hlToast('Đã đăng ký: ' + email); e.target.reset(); }
+  else { hlToast('Vui lòng nhập email!'); }
+}
+if (typeof hlToast === 'undefined') { function hlToast(m){ alert(m); } }
+</script>
+
 </body>
 </html>
