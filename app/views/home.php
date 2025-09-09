@@ -1,103 +1,83 @@
-<?php include __DIR__ . "/layouts/header.php"; ?>
+<?php require __DIR__ . '/layouts/header.php'; ?>
 
-<!-- Hero Section -->
-<section class="hero">
-  <img src="<?= BASE_URL ?>public/assets/images/banner.png" alt="HighLinh Banner">
-  <div class="overlay"></div>
-  <div class="hero-caption container">
-    <h1>Chào mừng đến với <span>HighLinh Coffee</span></h1>
-    <p>Gu cà phê mạnh mẽ – Không gian hiện đại.</p>
-    <a class="btn-primary" href="<?= BASE_URL ?>index.php?url=Product/list">
-      Khám phá menu <i class="fa-solid fa-arrow-right"></i>
-    </a>
-    <!-- Thêm nút đăng nhập -->
-    <a href="#" class="btn-light" id="openLogin">Đăng nhập</a>
+<?php if (!empty($_SESSION['flash'])): ?>
+  <div class="alert success text-center py-2">
+    <?= htmlspecialchars($_SESSION['flash']) ?>
+  </div>
+  <?php unset($_SESSION['flash']); ?>
+<?php endif; ?>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" role="banner" aria-label="HighLinh Coffee hero">
+  <!-- Nếu CSS của bạn hỗ trợ .hero dùng background-image,
+       có thể bỏ <img> này đi. Giữ lại để chắc chắn hiển thị. -->
+  <img src="<?= BASE_URL ?>public/assets/images/hero.jpg"
+       alt="HighLinh Coffee"
+       class="hero-img" loading="eager" decoding="async">
+  <div class="overlay" aria-hidden="true"></div>
+  <div class="hero-caption">
+    <h1>ĐẬM VỊ VIỆT <span>CHUẨN GU CÀ PHÊ</span></h1>
+    <p>Trải nghiệm Highlands Coffee theo cách của bạn</p>
+    <a href="<?= BASE_URL ?>index.php?url=Product/list" class="btn-primary">Khám phá Menu</a>
   </div>
 </section>
 
-<!-- Product Section -->
-<section class="container section">
+<!-- ===================== FEATURED PRODUCTS ===================== -->
+<section class="section container" aria-labelledby="featured">
   <div class="section-head">
-    <h2>Sản phẩm nổi bật</h2>
-    <a class="link-more" href="<?= BASE_URL ?>index.php?url=Product/list">Xem tất cả</a>
+    <h2 id="featured">Sản phẩm nổi bật</h2>
+    <a href="<?= BASE_URL ?>index.php?url=Product/list" class="link-more">Xem tất cả</a>
   </div>
 
   <div class="grid-products">
-    <?php if (!empty($products) && is_array($products)): ?>
-      <?php foreach ($products as $p): ?>
-        <article class="card-product">
-          <div class="card-media">
-            <img src="<?= BASE_URL ?>public/assets/images/<?= htmlspecialchars($p['image'] ?? 'arabica.jpg') ?>"
-                 alt="<?= htmlspecialchars($p['name'] ?? 'Sản phẩm') ?>">
-            <span class="badge">HOT</span>
-          </div>
-          <div class="card-body">
-            <h3><?= htmlspecialchars($p['name'] ?? 'Tên sản phẩm') ?></h3>
-            <p class="price"><?= number_format($p['price'] ?? 0, 0, ',', '.') ?> VNĐ</p>
-            <div class="card-actions">
-              <a class="btn-outline" href="<?= BASE_URL ?>index.php?url=Product/detail/<?= (int)($p['id'] ?? 0) ?>">Xem chi tiết</a>
-              <button class="btn-primary" onclick="hlAddToCart(<?= (int)($p['id'] ?? 0) ?>)">Thêm</button>
-            </div>
-          </div>
-        </article>
-      <?php endforeach; ?>
-    <?php else: ?>
-      <p>Không có sản phẩm nào để hiển thị.</p>
-    <?php endif; ?>
-  </div>
-</section>
-
-<!-- Promo Section -->
-<section class="container section promo">
-  <div class="promo-card">
-    <h3>Thành viên HighLinh</h3>
-    <p>Tích điểm mỗi ngày – đổi ly miễn phí, nhận ưu đãi riêng.</p>
-    <a class="btn-light" href="<?= BASE_URL ?>index.php?url=User/register">Tham gia ngay</a>
-  </div>
-</section>
-
-<!-- Popup Login Form -->
-<div class="overlay" id="loginOverlay" style="display:none;">
-  <div class="auth-card">
-    <span class="close-btn" id="closeLogin">&times;</span>
-    <h2>ĐĂNG NHẬP TÀI KHOẢN</h2>
-    <p>Bạn chưa có tài khoản? <a href="<?= BASE_URL ?>index.php?url=User/register">Đăng ký tại đây</a></p>
-
-    <form method="POST" action="<?= BASE_URL ?>index.php?url=User/login">
-      <label>Email *</label>
-      <input type="email" name="email" placeholder="Email" required>
-
-      <label>Mật khẩu *</label>
-      <input type="password" name="password" placeholder="Mật khẩu" required>
-
-      <p><a href="#">Quên mật khẩu?</a></p>
-
-      <button type="submit">Đăng nhập</button>
-    </form>
-
-    <div class="social-login">
-      <p>Hoặc đăng nhập bằng</p>
-      <div class="social-buttons">
-        <a href="#" class="btn fb">Facebook</a>
-        <a href="#" class="btn gg">Google</a>
+    <!-- Arabica -->
+    <article class="card-product">
+      <div class="card-media">
+        <img src="<?= BASE_URL ?>public/assets/images/arabica.jpg" alt="Cà phê Arabica" loading="lazy">
+        <div class="badge">Mới</div>
       </div>
-    </div>
+      <div class="card-body">
+        <h3>Cà phê Arabica</h3>
+        <span class="price">49.000đ</span>
+        <div class="card-actions">
+          <a href="<?= BASE_URL ?>index.php?url=Product/detail&id=1" class="btn-outline">Chi tiết</a>
+          <a href="<?= BASE_URL ?>index.php?url=Cart/add&id=1" class="btn-primary">Mua ngay</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Robusta -->
+    <article class="card-product">
+      <div class="card-media">
+        <img src="<?= BASE_URL ?>public/assets/images/robusta.jpg" alt="Cà phê Robusta" loading="lazy">
+        <div class="badge">Bán chạy</div>
+      </div>
+      <div class="card-body">
+        <h3>Cà phê Robusta</h3>
+        <span class="price">39.000đ</span>
+        <div class="card-actions">
+          <a href="<?= BASE_URL ?>index.php?url=Product/detail&id=2" class="btn-outline">Chi tiết</a>
+          <a href="<?= BASE_URL ?>index.php?url=Cart/add&id=2" class="btn-primary">Mua ngay</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Combo -->
+    <article class="card-product">
+      <div class="card-media">
+        <img src="<?= BASE_URL ?>public/assets/images/logo.png" alt="Combo đặc biệt" loading="lazy">
+        <div class="badge">Ưu đãi</div>
+      </div>
+      <div class="card-body">
+        <h3>Combo đặc biệt</h3>
+        <span class="price">99.000đ</span>
+        <div class="card-actions">
+          <a href="<?= BASE_URL ?>index.php?url=Product/list" class="btn-outline">Chi tiết</a>
+          <a href="<?= BASE_URL ?>index.php?url=Cart/add&id=combo" class="btn-primary">Mua ngay</a>
+        </div>
+      </div>
+    </article>
   </div>
-</div>
+</section>
 
-<script>
-  // JS mở/đóng popup login
-  document.getElementById("openLogin").onclick = function(e) {
-    e.preventDefault();
-    document.getElementById("loginOverlay").style.display = "flex";
-  };
-  document.getElementById("closeLogin").onclick = function() {
-    document.getElementById("loginOverlay").style.display = "none";
-  };
-  window.onclick = function(e) {
-    let overlay = document.getElementById("loginOverlay");
-    if (e.target === overlay) overlay.style.display = "none";
-  };
-</script>
-
-<?php include __DIR__ . "/layouts/footer.php"; ?>
+<?php require __DIR__ . '/layouts/footer.php'; ?>

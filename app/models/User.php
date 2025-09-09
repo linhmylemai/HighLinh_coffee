@@ -1,34 +1,41 @@
 <?php
 class User {
-    private $db;
+    private PDO $db;
+    public function __construct(PDO $db) { $this->db = $db; }
 
-    public function __construct($db) {
-        $this->db = $db;
-    }
-
-    // Đăng ký
-    public function register($name, $email, $password) {
-        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-
-        if ($stmt->fetch()) {
-            return false; // Email đã tồn tại
-        }
-
-        $hash = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $this->db->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-        return $stmt->execute([$name, $email, $hash]);
-    }
-
-    // Kiểm tra đăng nhập
-    public function checkLogin($email, $password) {
-        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
+    // Đăng nhập bằng USERNAME
+    public function checkLoginByUsername(string $username, string $password) {
+        $sql = "SELECT id, name, email, username, password FROM users WHERE username = :u LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':u' => $username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
+            unset($user['password']);
             return $user;
         }
         return false;
+    }
+
+    // Đăng nhập bằng EMAIL
+    public function checkLoginByEmail(string $email, string $password) {
+        $sql = "SELECT id, name, email, username, password FROM users WHERE email = :e LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':e' => $email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && password_verify($password, $user['password'])) {
+            unset($user['password']);
+            return $user;
+        }
+        return false;
+    }
+
+    // Tương thích ngược: cho phép truyền username **hoặc** email
+    public function checkLogin(string $identifier, string $password) {
+        if (strpos($identifier, '@') !== false) {
+            return $this->checkLoginByEmail($identifier, $password);
+        }
+        return $this->checkLoginByUsername($identifier, $password);
     }
 }
