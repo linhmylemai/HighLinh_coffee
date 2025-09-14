@@ -40,21 +40,21 @@ class UserController {
     // ===== Đăng nhập =====
     public function login(): void {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $identifier    = trim($_POST['username'] ?? '');
+            $name     = trim($_POST['name'] ?? '');
             $password = trim($_POST['password'] ?? '');
 
-            if ($identifier === '' || $password === '') {
+            if ($name === '' || $password === '') {
                 $error = 'Vui lòng nhập tên đăng nhập và mật khẩu!';
             } else {
-                $user = $this->userModel->checkLogin($identifier, $password);
+                // dùng checkLoginByName thay vì checkLogin
+                $user = $this->userModel->checkLoginByName($name, $password);
 
                 if ($user) {
                     session_regenerate_id(true); // tăng bảo mật
                     $_SESSION['user'] = [
                         'id'    => $user['id'],
                         'name'  => $user['name'],
-                        'email' => $user['email'],
-                        'username' => $user['username'] ?? null,
+                        'email' => $user['email']
                     ];
                     header('Location: ' . BASE_URL . 'index.php?url=Home/index');
                     exit();

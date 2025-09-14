@@ -458,3 +458,103 @@ p, a, li, span {
 .btn-primary.full-width:hover {
   background: #7a0000;
 }
+/* ========== TOPBAR ========== */
+.hl-topbar {
+  background: #8B0000; /* đỏ rượu vang */
+  color: #FFD700;      /* vàng ánh kim */
+  font-size: 14px;
+  padding: 6px 0;
+}
+
+.hl-topbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hl-topbar .topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hl-topbar .dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: #FFD700;
+  border-radius: 50%;
+  margin: 0 8px;
+}
+
+/* ========== NAVBAR ========== */
+.hl-navbar {
+  background: #111; /* đen nhung sang trọng */
+  border-bottom: 3px solid #CFA75E; /* viền vàng signature */
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 18px;
+  color: #FFD700;
+}
+
+.brand span {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Menu */
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-menu li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.nav-menu li a:hover {
+  background: #CFA75E;
+  color: #000;
+}
+
+/* Login */
+.login-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.login-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.login-link:hover {
+  color: #FFD700;
+}
+
+.hello {
+  color: #FFD700;
+  font-style: italic;
+}

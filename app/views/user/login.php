@@ -9,7 +9,7 @@
     <?php endif; ?>
 
     <form method="post" action="<?= BASE_URL ?>index.php?url=User/login" class="auth-form">
-        <input type="text" name="username" placeholder="Tên đăng nhập" required>
+        <input type="text" name="name" placeholder="Tên đăng nhập" required>
         <input type="password" name="password" placeholder="Mật khẩu" required>
         <button type="submit">Đăng nhập</button>
     </form>

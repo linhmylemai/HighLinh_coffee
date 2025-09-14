@@ -1,6 +1,6 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
-if (!defined('BASE_URL')) define('BASE_URL', '/CAFE/HighLinh_coffee/');
+if (!defined('BASE_URL')) define('BASE_URL', '/HighLinh_Coffee/');
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -13,9 +13,9 @@ if (!defined('BASE_URL')) define('BASE_URL', '/CAFE/HighLinh_coffee/');
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <!-- YOUR CSS (đường dẫn đúng theo BASE_URL) -->
+  <!-- CSS -->
   <link rel="stylesheet" href="<?= BASE_URL ?>public/assets/css/style.css">
-  <!-- (nếu có JS của bạn) -->
+  <!-- JS -->
   <script defer src="<?= BASE_URL ?>public/assets/js/main.js"></script>
 </head>
 <body>
@@ -35,7 +35,7 @@ if (!defined('BASE_URL')) define('BASE_URL', '/CAFE/HighLinh_coffee/');
   <nav class="hl-navbar" role="navigation">
     <div class="container nav-inner">
       <a class="brand" href="<?= BASE_URL ?>index.php?url=Home/index">
-        <img src="<?= BASE_URL ?>public/assets/images/logo.png" alt="HighLinh Coffee" style="height:50px;" />
+        <img src="<?= BASE_URL ?>public/images/logo.png" alt="HighLinh Coffee" style="height:50px;" />
         <span>HighLinh Coffee</span>
       </a>
 
@@ -44,6 +44,7 @@ if (!defined('BASE_URL')) define('BASE_URL', '/CAFE/HighLinh_coffee/');
         <li><a href="<?= BASE_URL ?>index.php?url=Product/list">Sản phẩm</a></li>
         <?php if (!empty($_SESSION['user'])): ?>
           <li><a href="<?= BASE_URL ?>index.php?url=Cart/index">Giỏ hàng</a></li>
+          <li><a href="<?= BASE_URL ?>index.php?url=Product/list">Menu</a></li>
         <?php endif; ?>
       </ul>
 

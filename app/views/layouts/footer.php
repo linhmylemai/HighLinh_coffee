@@ -46,3 +46,9 @@ if (typeof hlToast === 'undefined') { function hlToast(m){ alert(m); } }
 
 </body>
 </html>
+  </main>
+  <footer>
+    <p>© 2025 HighLinh Coffee</p>
+  </footer>
+</body>
+</html>
